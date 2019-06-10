@@ -9,6 +9,7 @@ Kazan Expert Fridays Meetups
 1. create and fill in hosts file
 2. create and fill in cluster file
 3. run command `ansible-playbook -i hosts cluster.yml`
+4. you can install grafana from this repo https://github.com/aerokube/selenoid-grafana-example
 
 # Links
 - selenoid: https://github.com/aerokube
