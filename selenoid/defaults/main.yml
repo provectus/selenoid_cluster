@@ -1,0 +1,21 @@
+selenoid_vnc: false
+selenoid_url: "localhost"
+influxdb_url: "localhost"
+influxdb_port: "8086"
+telegraf: false
+influxdb_name: "telegraf"
+influxdb_password: "supersecret"
+selenoid_shmSize: 268435456
+selenoid_tmpSize: 512m
+selenoid_varSize: 128m
+selenoid_timezone: "Europe/Moscow"
+selenoid_port: 4444
+selenoid_browsers:
+  - name: "chrome"
+    default: "73.0"
+    versions:
+      - "73.0"
+  - name: "firefox"
+    default:  "66.0"
+    versions:
+      - "66.0"

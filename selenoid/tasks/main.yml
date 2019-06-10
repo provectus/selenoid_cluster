@@ -1,0 +1,56 @@
+---
+- name: Selenoid | Install certain python modules for docker
+  pip:
+    name: "{{ item.name }}"
+  with_items:
+    - { name: docker-py }
+
+- name: Selenoid | Check selenoid container exist
+  shell: 'docker ps -aq --filter "name={{ item }}"'
+  with_items:
+    - 'selenoid'
+  register: found_containers
+
+- name: Selenoid | Remove selenoid container if exist
+  shell: 'docker stop {{ item.item }} && docker rm -fv {{ item.item }}'
+  with_items: '{{ found_containers.results }}'
+  when: item.stdout
+
+- name: Pull selenoid docker image
+  docker_image:
+    name: aerokube/selenoid:latest-release
+
+- name: Pull chosen browser docker images
+  docker_image:
+    name: "selenoid/{% if selenoid_vnc %}vnc:{{ item.0.name }}_{{ item.1 }}{% else %}{{ item.0.name }}:{{ item.1 }}{% endif %}"
+  with_subelements:
+    - "{{ selenoid_browsers }}"
+    - versions
+
+- name: Create Selenoid configuration directory
+  file:
+    path: config
+    state: directory
+    mode: 0775
+
+- name: Copy browsers config
+  template:
+    src: browsers.json.j2
+    dest: config/browsers.json
+
+- name: Selenoid | Run Selenoid container
+  docker_container:
+    name: selenoid
+    image: "aerokube/selenoid:latest-release"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./config:/etc/selenoid/:ro"
+    env:
+      TZ: "{{ selenoid_timezone }}"
+    ports:
+      - "{{ selenoid_port }}:4444"
+    command: run
+
+- name: Selenoid | install telegraf
+  include_tasks: telegraf.yml
+  when: telegraf

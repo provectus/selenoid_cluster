@@ -1,0 +1,4 @@
+---
+selenoid_url: "localhost"
+selenoid_port: 4444
+selenoid_ui_port: 8080

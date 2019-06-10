@@ -1,0 +1,32 @@
+---
+- name: Setup influxDb
+  hosts: selenoid-ui
+  vars:
+    - influxdb_port: 8086
+  roles:
+    - influxdb
+- name: Setup selenoid and telegraf
+  hosts: selenoid-node
+  roles:
+    - selenoid
+  vars:
+    - telegraf: true
+    - selenoid_url: "http://dev-selenoid.dev.com"
+    - influxdb_url: "http://dev-selenoid-ui.dev.com"
+    - influxdb_port: 8086
+    - selenoid_browsers:
+      - name: "chrome"
+        default: "74.0"
+        versions:
+          - "74.0"
+      - name: "firefox"
+        default:  "67.0"
+        versions:
+          - "67.0"
+- name: Setup selenoid-ui
+  hosts: selenoid-ui
+  vars:
+    - selenoid_url: "http://dev-selenoid.dev.com"
+    - selenoid_ui_port: 8081
+  roles:
+    - selenoid-ui

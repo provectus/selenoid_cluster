@@ -1,0 +1,29 @@
+---
+- name: Copy telegraf config
+  template:
+    src: telegraf.conf.j2
+    dest: config/telegraf.conf
+
+- name: Selenoid | Check telegraf container exist
+  shell: 'docker ps -aq --filter "name={{ item }}"'
+  with_items:
+    - 'telegraf'
+  register: found_containers
+
+- name: Selenoid | Remove telegraf container if exist
+  shell: 'docker stop {{ item.item }} && docker rm -fv {{ item.item }}'
+  with_items: '{{ found_containers.results }}'
+  when: item.stdout
+
+- name: Start telegraf
+  docker_container:
+    image: telegraf:latest
+    name: telegraf
+    state: started
+    links:
+      - selenoid
+    volumes:
+      - "./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro"
+    env:
+      INFLUXDB_URI: "{{ influxdb_url}}:{{ influxdb_port }}"
+      HOST_IP: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"

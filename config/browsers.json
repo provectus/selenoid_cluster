@@ -1,0 +1,21 @@
+{
+    "chrome": {
+    "default": "74.0",
+    "versions": {
+            "74.0": {
+        "image": "selenoid/chrome:74.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {"/tmp": "size=512m", "/var": "size=128m"},
+        "shmSize" : 268435456
+        },
+            "73.0": {
+        "image": "selenoid/chrome:73.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {"/tmp": "size=512m", "/var": "size=128m"},
+        "shmSize" : 268435456
+        }
+        }
+    }
+}
