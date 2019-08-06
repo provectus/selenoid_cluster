@@ -1,7 +1,6 @@
 /ans/
 .idea/
 TODO.txt
-cluster.yml
 *.retry
 .envrc
 *.swp
