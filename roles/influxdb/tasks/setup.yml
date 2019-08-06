@@ -1,0 +1,17 @@
+---
+# FIXME: do we need to pull the container first?
+- name: Start influxdb
+  docker_container:
+    image: influxdb:alpine
+    name: influxdb
+    state: started
+    ports:
+      - "{{ influxdb_port }}:8086"
+    # FIXME: use absolute path for production like setup 
+    volumes:
+      - "./data/influxdb:/var/lib/influxdb"
+    env:
+      INFLUXDB_REPORTING_DISABLED: "true"
+      INFLUXDB_DB: "{{ influxdb_db }}"
+      INFLUXDB_USER: "{{ influxdb_user }}"
+      INFLUXDB_USER_PASSWORD: "{{ influxdb_user_password }}"
