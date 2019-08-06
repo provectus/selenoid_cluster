@@ -2,10 +2,12 @@
 - name: Pull selenoid docker image
   docker_image:
     name: aerokube/selenoid:latest-release
+    source: pull
 
 - name: Pull chosen browser docker images
   docker_image:
     name: "selenoid/{% if selenoid_vnc %}vnc:{{ item.0.name }}_{{ item.1 }}{% else %}{{ item.0.name }}:{{ item.1 }}{% endif %}"
+    source: pull
   with_subelements:
     - "{{ selenoid_browsers }}"
     - versions

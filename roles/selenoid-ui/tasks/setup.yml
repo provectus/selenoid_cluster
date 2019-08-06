@@ -2,6 +2,7 @@
 - name: Selenoid-UI | Pull selenoid-ui docker image
   docker_image:
     name: aerokube/selenoid-ui:latest
+    source: pull
 
 - name: Selenoid-UI | Run Selenoid-UI container
   docker_container:
