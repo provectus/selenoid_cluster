@@ -1,5 +1,6 @@
 ---
 - name: Setup influxDb
+  gather_facts: no
   hosts: influxdb
   vars:
     - influxdb_port: 8086
@@ -26,6 +27,7 @@
           - "67.0"
 
 - name: Setup selenoid-ui
+  gather_facts: no
   hosts: selenoid-ui
   vars:
     - selenoid_url: "http://selenoid-ui.mydev.com"
