@@ -1,5 +1,4 @@
 ---
-
 - name: Selenoid-UI | Check selenoid container exist
   shell: 'docker ps -aq --filter "name={{ item }}"'
   with_items:
@@ -10,15 +9,3 @@
   shell: 'docker stop {{ item.item }} && docker rm -fv {{ item.item }}'
   with_items: '{{ found_ui_containers.results }}'
   when: item.stdout
-
-- name: Selenoid-UI | Pull selenoid-ui docker image
-  docker_image:
-    name: aerokube/selenoid-ui:latest
-
-- name: Selenoid-UI | Run Selenoid-UI container
-  docker_container:
-    name: selenoid-ui
-    image: "aerokube/selenoid-ui:latest"
-    ports:
-      - "{{ selenoid_ui_port }}:8080"
-    command: "-selenoid-uri={{ selenoid_url }}:{{ selenoid_port }}"

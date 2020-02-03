@@ -1,0 +1,10 @@
+- name: InfluxDb | Check influxdb container exist
+  shell: 'docker ps -aq --filter "name={{ item }}"'
+  with_items:
+    - 'influxdb'
+  register: found_containers
+
+- name: InfluxDb | Remove influxdb container if exist
+  shell: 'docker stop {{ item.item }} && docker rm -fv {{ item.item }}'
+  with_items: '{{ found_containers.results }}'
+  when: item.stdout

@@ -1,0 +1,11 @@
+[selenoid-node]
+# 10.10.10.1
+
+[selenoid-ui]
+# 10.10.10.2
+
+[influxdb]
+# 10.10.10.2
+
+### Use this line to try it on your local computer
+# 127.0.0.1 ansible_connection=local ansible_python_interpreter={{ansible_playbook_python}}

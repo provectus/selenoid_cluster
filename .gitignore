@@ -1,5 +1,7 @@
 /ans/
 .idea/
 TODO.txt
-cluster.yml
-hosts
+*.retry
+.envrc
+*.swp
+*~

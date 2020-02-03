@@ -6,9 +6,9 @@ Kazan Expert Fridays Meetups
 
 # how to run
 0. setup ansible
-1. create and fill in hosts file
+1. create and fill hosts in inventory file
 2. create and fill in cluster file
-3. run command `ansible-playbook -i hosts cluster.yml`
+3. run command `ansible-playbook cluster.yml`
 4. you can install grafana from this repo https://github.com/aerokube/selenoid-grafana-example
 
 # Links

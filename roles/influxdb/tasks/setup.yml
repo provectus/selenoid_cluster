@@ -1,15 +1,5 @@
 ---
-- name: InfluxDb | Check influxdb container exist
-  shell: 'docker ps -aq --filter "name={{ item }}"'
-  with_items:
-    - 'influxdb'
-  register: found_containers
-
-- name: InfluxDb | Remove influxdb container if exist
-  shell: 'docker stop {{ item.item }} && docker rm -fv {{ item.item }}'
-  with_items: '{{ found_containers.results }}'
-  when: item.stdout
-
+# FIXME: do we need to pull the container first?
 - name: Start influxdb
   docker_container:
     image: influxdb:alpine
@@ -17,6 +7,7 @@
     state: started
     ports:
       - "{{ influxdb_port }}:8086"
+    # FIXME: use absolute path for production like setup 
     volumes:
       - "./data/influxdb:/var/lib/influxdb"
     env:

@@ -1,0 +1,10 @@
+---
+- name: Install certain python modules for docker
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - docker-py
+
+# FIXME: add conditionals to include/exclude cleanup
+- include: cleanup.yml
+- include: setup.yml

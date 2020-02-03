@@ -1,10 +1,12 @@
 ---
 - name: Setup influxDb
-  hosts: selenoid-ui
+  gather_facts: no
+  hosts: influxdb
   vars:
     - influxdb_port: 8086
   roles:
     - influxdb
+
 - name: Setup selenoid and telegraf
   hosts: selenoid-node
   roles:
@@ -23,7 +25,9 @@
         default:  "67.0"
         versions:
           - "67.0"
+
 - name: Setup selenoid-ui
+  gather_facts: no
   hosts: selenoid-ui
   vars:
     - selenoid_url: "http://selenoid-ui.mydev.com"

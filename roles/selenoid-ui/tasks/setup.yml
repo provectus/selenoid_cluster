@@ -1,0 +1,13 @@
+---
+- name: Selenoid-UI | Pull selenoid-ui docker image
+  docker_image:
+    name: aerokube/selenoid-ui:latest
+    source: pull
+
+- name: Selenoid-UI | Run Selenoid-UI container
+  docker_container:
+    name: selenoid-ui
+    image: "aerokube/selenoid-ui:latest"
+    ports:
+      - "{{ selenoid_ui_port }}:8080"
+    command: "-selenoid-uri={{ selenoid_url }}:{{ selenoid_port }}"
